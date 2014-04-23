@@ -276,7 +276,7 @@ module.exports = function (grunt) {
                         '.htaccess',
                         'images/{,*/}*.webp',
                         '{,*/}*.html',
-                        'styles/fonts/{,*/}*.*',
+                        'styles/{,*/}*.*',
                         'bower_components/bootstrap/dist/fonts/*.*'
                     ]
                 }]
