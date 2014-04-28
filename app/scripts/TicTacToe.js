@@ -31,87 +31,16 @@ var Board = (function () {
   };
 
 })();
+
 var triples = [
-  [{
-    r: 0,
-    c: 0
-  }, {
-    r: 0,
-    c: 1
-  }, {
-    r: 0,
-    c: 2
-  }],
-  [{
-    r: 1,
-    c: 0
-  }, {
-    r: 1,
-    c: 1
-  }, {
-    r: 1,
-    c: 2
-  }],
-  [{
-    r: 2,
-    c: 0
-  }, {
-    r: 2,
-    c: 1
-  }, {
-    r: 2,
-    c: 2
-  }],
-  [{
-    r: 0,
-    c: 0
-  }, {
-    r: 1,
-    c: 0
-  }, {
-    r: 2,
-    c: 0
-  }],
-  [{
-    r: 0,
-    c: 1
-  }, {
-    r: 1,
-    c: 1
-  }, {
-    r: 2,
-    c: 1
-  }],
-  [{
-    r: 0,
-    c: 2
-  }, {
-    r: 1,
-    c: 2
-  }, {
-    r: 2,
-    c: 2
-  }],
-  [{
-    r: 0,
-    c: 0
-  }, {
-    r: 1,
-    c: 1
-  }, {
-    r: 2,
-    c: 2
-  }],
-  [{
-    r: 2,
-    c: 0
-  }, {
-    r: 1,
-    c: 1
-  }, {
-    r: 0,
-    c: 2
-  }]
+  [{r: 0,c: 0}, {r: 0,c: 1}, {r: 0,c: 2}],
+  [{r: 1,c: 0}, {r: 1,c: 1}, {r: 1,c: 2}],
+  [{r: 2,c: 0}, {r: 2,c: 1}, {r: 2,c: 2}],
+  [{r: 0,c: 0}, {r: 1,c: 0}, {r: 2,c: 0}],
+  [{r: 0,c: 1}, {r: 1,c: 1}, {r: 2,c: 1}],
+  [{r: 0,c: 2}, {r: 1,c: 2}, {r: 2,c: 2}],
+  [{r: 0,c: 0}, {r: 1,c: 1}, {r: 2,c: 2}],
+  [{r: 2,c: 0}, {r: 1,c: 1}, {r: 0,c: 2}]
 ];
 
 var Game = (function () {
@@ -284,28 +213,62 @@ $(function () {
   });
 
   $('#sign_in').click(function () {
-    console.log(this.id);
+    bootbox.prompt('Username?',function(username){
+      if(!username)return;
+      bootbox.prompt('Password?',function(password){
+        if(!password)return;
+        var u = {username:username, password:password};
+        Admin.signin(u);
+      });
+    });
   });
+
   $('#sign_up').click(function () {
-    console.log(this.id);
+    bootbox.prompt('Username?',function(username){
+      if(!username)return;
+      bootbox.prompt('Password?',function(password){
+        if(!password)return;
+        bootbox.prompt('Email?',function(email){
+          if(!email)return;
+          bootbox.confirm('Comfirm? <br/>username: ' + username + '<br/>password: ' + password + '<br/>email: '+ email, function(comfirm){
+            if(!confirm)return;
+            var u = {username:username,password:password,email:email};
+            var ok = Admin.signup(u);
+          });
+        });
+      });
+    });
   });
+
   $('#sign_out').click(function () {
-    console.log(this.id);
+    Admin.signout();
   });
+
   $('#new_game').click(function () {
     console.log(this.id);
   });
+
   $('#save_game').click(function () {
     console.log(this.id);
   });
+
   $('#load_game').click(function () {
     console.log(this.id);
   });
+
   $('#match').click(function () {
     console.log(this.id);
   });
+
   $('#leave').click(function () {
     console.log(this.id);
   });
 
+  $('#dirty').click(function () {
+    Admin.dirty();
+  });
+
+  $('#clean').click(function () {
+    Admin.clean();
+  });
 });
