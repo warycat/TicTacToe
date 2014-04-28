@@ -170,7 +170,6 @@ var Game = (function () {
 
   function ai() {
     if (_currentPlayer !== _computerIndex) {
-      console.log(_currentPlayer, _computerIndex);
       return;
     }
 
@@ -202,6 +201,7 @@ var Game = (function () {
     });
     _seq = _seq + 1;
     _code = code();
+    console.log(_code);
     if (_code !== -1) {
       setTimeout(function () {
         end(_code);
@@ -213,34 +213,25 @@ var Game = (function () {
   }
 
   function code() {
-    _.each(triples,function(triple,i){
+    for (var i = 0; i < triples.length; i++) {
+      var triple = triples[i];
       var s = '';
-      $.each(triple, function (index, tile) {
+      for (var j = 0; j < triple.length; j++) {
+        var tile = triple[j];
         var r = tile.r;
         var c = tile.c;
         var t = _states[r][c];
         s = s + t;
-      });
+      }
       if (s === 'XXX') return i;
       if (s === 'OOO') return 10 + i;
-    });
-    // for (var i = 0; i < triples.length; i++) {
-    //   var triple = triples[i];
-    //   var s = '';
-    //   $.each(triple, function (index, tile) {
-    //     var r = tile.r;
-    //     var c = tile.c;
-    //     var t = _states[r][c];
-    //     s = s + t;
-    //   });
-    //   if (s === 'XXX') return i;
-    //   if (s === 'OOO') return 10 + i;
-    // }
+    }
     if (_seq === 9) return -2;
     return -1;
   }
 
   function end(code) {
+    console.log(code);
     if (code === -2) {
       Board.setTitle('DRAW');
       return;
